@@ -1,0 +1,17 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da') no-repeat center center/cover;
+}
+
+.overlay {
+    background: rgba(0,0,0,0.6);
+    min-height: 100vh;
+}
+
+header {
+    background: #2c3e50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
