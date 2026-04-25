@@ -5,7 +5,9 @@ require_once "classes/product.php";
 include "includes/header.php";
 include "includes/nav.php";
 
-usort($products, fn($a, $b) => $a['price'] <=> $b['price']);
+usort($products, function($a, $b) {
+    $a['price'] <=> $b['price'];
+});
 
 $categories = [
     "drinks" => "Pijet (Drinks) ",
