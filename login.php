@@ -32,3 +32,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 include "includes/header.php";
 include "includes/nav.php";
 ?>
+
+<div class="login-container" style="display: flex; justify-content: center; align-items: center; min-height: 70vh;">
+    <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); width: 350px; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+        
+        <h2 style="color: white; margin-bottom: 30px; font-family: sans-serif;">Kyçja në MiniShop</h2>
+
+        <?php if($error): ?>
+            <div style="background: #ff4d4d; color: white; padding: 10px; border-radius: 5px; margin-bottom: 20px; font-size: 14px;">
+                <?php echo $error; ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="POST">
+            <div style="margin-bottom: 20px; text-align: left;">
+                <label style="color: white; display: block; margin-bottom: 5px; font-size: 14px;">Email</label>
+                <input type="text" name="email" placeholder="email@shembull.com" 
+                       style="width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: white; outline: none;">
+            </div>
+
+            <div style="margin-bottom: 30px; text-align: left;">
+                <label style="color: white; display: block; margin-bottom: 5px; font-size: 14px;">Password</label>
+                <input type="password" name="password" placeholder="••••••" 
+                       style="width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: white; outline: none;">
+            </div>
+
+            <button type="submit" style="width: 100%; padding: 12px; border-radius: 8px; border: none; background: #2ecc71; color: white; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s;">
+                Login
+            </button>
+        </form>
+        
+        <p style="color: white; margin-top: 20px; font-size: 13px; opacity: 0.7;">
+            Nuk keni llogari? <a href="register.php" style="color: #2ecc71; text-decoration: none;">Regjistrohuni</a>
+        </p>
+    </div>
+</div>
+
+<?php include "includes/footer.php"; ?>
