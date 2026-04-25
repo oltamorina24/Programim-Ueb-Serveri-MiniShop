@@ -17,21 +17,3 @@ if (session_status() === PHP_SESSION_NONE) {
         <a href="login.php" style="color: #2ecc71; font-weight: bold;">Login</a>
     <?php endif; ?>
 </nav>
-header.php
-<!DOCTYPE html>
-<html>
-<head>//
-    <title>MiniShop</title>
-    <link rel="stylesheet" href="assets/style.css">
-</head>
-<body>
-<header>
-    <h1>🛒 MiniShop</h1>
-</header>
-footer.php
- </div>
-<footer style="text-align:center; padding:10px;">
-    <p>MiniShop © 2026</p>
-</footer>
-</body>
-</html>
