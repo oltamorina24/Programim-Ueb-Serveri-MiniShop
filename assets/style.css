@@ -3,15 +3,40 @@ body {
     margin: 0;
     background: url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da') no-repeat center center/cover;
 }
-
 .overlay {
     background: rgba(0,0,0,0.6);
     min-height: 100vh;
 }
-
 header {
     background: #2c3e50;
     color: white;
     padding: 15px;
     text-align: center;
+}
+nav {
+    background: #34495e;
+    padding: 10px;
+    text-align: center;
+}
+nav a {
+    color: white;
+    margin: 10px;
+    text-decoration: none;
+}
+.container {
+    padding: 20px;
+}
+.login-box {
+    width: 300px;
+    margin: 100px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
 }
