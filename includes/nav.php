@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <a href="search.php">Search</a>
 
     <?php 
- 
+
     if(isset($_SESSION['user'])): 
     ?>
         <a href="logout.php" style="color: #ff4d4d; font-weight: bold;">Logout (<?php echo $_SESSION['user']['name']; ?>)</a>
