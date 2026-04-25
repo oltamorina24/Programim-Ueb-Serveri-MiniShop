@@ -1,16 +1,30 @@
+<?php
+session_start();
+include "includes/header.php";
+include "includes/nav.php";
 
+$message = "";
+$error = "";
 
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    $fullname = $_POST['fullname'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-
-
-
-
-
-
-
-
-
-
+    if(!preg_match("/^[a-zA-Z]{2,}\s[a-zA-z]{2,}$/", $fullname)){
+        $error = "Shenoni emrin dhe mbiemrin e plote!";
+    }
+    elseif (!preg_match("/^[^@]+@[^@]+\.[a-z]{2,}$/i", $email)){
+        $error = "Formati i email-it nuk eshte i sakte!";
+    }
+    elseif (!preg_match("/^[a-zA-Z0-9]{6,}$/", $password)){
+        $error = "Password-i duhet te kete te pakten 6 karaktere!";
+    }
+    else{
+        $message = "Llogaria u krijua me sukses! Mund te kyceni tani.";
+    }
+}
+?>
 
 <div class="login-container" style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
     <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); width: 400px; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
