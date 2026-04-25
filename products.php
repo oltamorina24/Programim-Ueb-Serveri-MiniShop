@@ -23,7 +23,7 @@ foreach($categories as $key => $label){
 
     foreach($products as $data){
         if(isset($data['category']) && $data['category'] == $key){
-            $p = new Product($data['name'], $data['price'], $data['category']);
+            $p = new Product($data['name'], $data['price']);
 
             echo "<div class = 'card'>";
             echo "<h3>" . $p -> getName() . "</h3>";
