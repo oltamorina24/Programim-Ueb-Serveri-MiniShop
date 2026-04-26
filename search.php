@@ -36,28 +36,48 @@ include "includes/nav.php";
                     }
                 }
 
-                if($match){
+                 if($match){
                     $foundAny = true;
-                    echo "<div class='card' style='margin: 10px;'>";
+                    $img = !empty($p['image']) ? $p['image'] : "https://via.placeholder.com/200";
+                    ?>
                     
-                    $img = "https://via.placeholder.com/200x120?text=" . urlencode($p['name']);
-                    if($p['name'] == 'Coca Cola') $img = "https://images.unsplash.com/photo-1622483767028-3f66f34a50f4";
-                    if($p['name'] == 'Laptop') $img = "https://images.unsplash.com/photo-1517336714731-489689fd1ca8";
+                    <div class="product-card" style="background: white; width: 250px; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.3); transition: transform 0.3s;">
+                        <div style="width: 100%; height: 200px; overflow: hidden; background: #f9f9f9;">
+                            <img src="<?php echo $img; ?>" 
+                                 style="width: 100%; height: 100%; object-fit: contain; padding: 10px;" 
+                                 alt="<?php echo htmlspecialchars($p['name']); ?>">
+                        </div>
+                        
+                        <div style="padding: 15px; text-align: left;">
+                            <span style="font-size: 12px; text-transform: uppercase; color: #95a5a6; font-weight: bold;">
+                                <?php echo htmlspecialchars($p['category']); ?>
+                            </span>
+                            <h3 style="margin: 5px 0; color: #2c3e50; font-size: 1.2rem;">
+                                <?php echo htmlspecialchars($p['name']); ?>
+                            </h3>
+                            <p style="font-size: 1.4rem; color: #e67e22; font-weight: bold; margin: 10px 0;">
+                                <?php echo number_format($p['price'], 2); ?> €
+                            </p>
+                            
+                            <a href="products.php" style="text-decoration: none;">
+                                <button type="button" style="background: #3498db; color: white; border: none; width: 100%; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                                    Shiko Detajet
+                                </button>
+                            </a>
+                        </div>
+                    </div>
 
-                    echo "<img src='$img' style='width:100%; border-radius:8px;'>";
-                    echo "<h3>" . htmlspecialchars($p['name']) . "</h3>";
-                    echo "<p>" . $p['price'] . " €</p>";
-                    echo "<a href='products.php'><button type='button' style='background:#3498db; 
-                    width: 100%;'>Shiko</button></a>";
-                    echo "</div>";
+                    <?php
                 }
             }
 
             if(!$foundAny){
-                echo "<p style='color:white; font-size: 18px; margin-top: 20px;'>
-                Nuk u gjet asnjë produkt për: <strong>" . 
-                htmlspecialchars($input) . "</strong></p>";
+                echo "<div style='color:white; background: rgba(231, 76, 60, 0.2); padding: 20px; border-radius: 10px; width: 100%; max-width: 500px;'>";
+                echo "Nuk u gjet asnjë produkt për: <strong>" . htmlspecialchars($input) . "</strong>";
+                echo "</div>";
             }
+        } else {
+            echo "<p style='color: rgba(255,255,255,0.5); font-style: italic;'>Shkruani diçka për të filluar kërkimin...</p>";
         }
         ?>
     </div>
