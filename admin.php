@@ -21,7 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ];
         $message = "Produkti u shtua me sukses!";
     }
-  if (isset($_POST['fshij_produkt'])) {
+
+if (isset($_POST['fshij_produkt'])) {
         $emriPerFshirje = $_POST['pname_delete'];
         $products = array_filter($products, function($p) use ($emriPerFshirje) {
             return $p['name'] !== $emriPerFshirje;
@@ -40,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 include "includes/header.php";
 include "includes/nav.php";
 ?>
+
   <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 30px; padding-top: 50px;">
     
     <?php if($message): ?>
