@@ -21,9 +21,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ];
         $message = "Produkti u shtua me sukses!";
     }
+if (isset($_POST['fshij_produkt'])) {
+        $emriPerFshirje = $_POST['pname_delete'];
+        $products = array_filter($products, function($p) use ($emriPerFshirje) {
+            return $p['name'] !== $emriPerFshirje;
+        });
+        $products = array_values($products); 
+        $message = "Produkti u fshi me sukses!";
+    }
+    $content = "<?php\n";
+    $content .= "\$products = [\n";
+    foreach ($products as $p) {
+        $content .= "    [\"name\" => \"" . addslashes($p['name']) . "\", \"price\" => " . $p['price'] . ", \"category\" => \"" . $p['category'] . "\", \"image\" => \"" . $p['image'] . "\"],\n";
+    }
+    $content .= "];";
+    file_put_contents($filePath, $content);
 }
+include "includes/header.php";
+include "includes/nav.php";
+?>
+
 <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 30px; padding-top: 50px;">
-    
     <?php if($message): ?>
         <div style="background: #2ecc71; color: white; padding: 10px; border-radius: 5px;"><?php echo $message; ?></div>
     <?php endif; ?>
