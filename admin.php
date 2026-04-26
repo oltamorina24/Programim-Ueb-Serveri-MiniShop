@@ -21,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ];
         $message = "Produkti u shtua me sukses!";
     }
-
 if (isset($_POST['fshij_produkt'])) {
         $emriPerFshirje = $_POST['pname_delete'];
         $products = array_filter($products, function($p) use ($emriPerFshirje) {
@@ -42,8 +41,7 @@ include "includes/header.php";
 include "includes/nav.php";
 ?>
 
-  <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 30px; padding-top: 50px;">
-    
+<div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 30px; padding-top: 50px;">
     <?php if($message): ?>
         <div style="background: #2ecc71; color: white; padding: 10px; border-radius: 5px;"><?php echo $message; ?></div>
     <?php endif; ?>
