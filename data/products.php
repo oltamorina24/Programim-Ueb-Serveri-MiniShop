@@ -12,5 +12,5 @@ $products = [
     ["name" => "Chips", "price" => 1.0, "category" => "salt", "image" => "https://th.bing.com/th/id/OIP.BfZR4d_gGUrw9vuaqeufQAHaEK?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"],
     ["name" => "Haribo", "price" => 1.5, "category" => "salt", "image" => "https://i.pinimg.com/originals/0b/f6/d0/0bf6d07bf9ce17a64dddf5d420e12387.jpg"],
     ["name" => "Kikirika", "price" => 0.8, "category" => "salt", "image" => "https://tse3.mm.bing.net/th/id/OIP.HdWX48IfdUf6PU-NVLkYzAHaDo?rs=1&pid=ImgDetMain&o=7&rm=3"],
-    ["name" => "Biskota kripura", "price" => 1.1, "category" => "salt", "image" => "https://img.freepik.com/premium-photo/small-salted-biscuits_1048944-3064212.jpg"]
+    ["name" => "Biskota te kripura", "price" => 1.1, "category" => "salt", "image" => "https://img.freepik.com/premium-photo/small-salted-biscuits_1048944-3064212.jpg"]
 ];
