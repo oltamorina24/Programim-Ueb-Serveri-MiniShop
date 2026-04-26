@@ -1,9 +1,27 @@
 <?php
-
-
-
-
-<div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 30px; padding-top: 50px;">
+session_start();
+$filePath = 'data/products.php';
+if (file_exists($filePath)){
+    require $filePath;
+}else{
+    $products = [];
+}
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin'){
+    header("Location: index.php");
+    exit();
+}
+$message = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['shto_produkt'])){
+        $products[] = [
+            'name' => $_POST['pname'],
+            'price' => (float)$_POST['pprice'],
+            'category' => $_POST['pcat'],
+            'image' => ""
+        ];
+        $message = "Produkti u shtua me sukses!";
+    }
+  <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 30px; padding-top: 50px;">
     
     <?php if($message): ?>
         <div style="background: #2ecc71; color: white; padding: 10px; border-radius: 5px;"><?php echo $message; ?></div>
@@ -23,7 +41,6 @@
         <button type="submit" name="shto_produkt" style="width: 100%; background:#2ecc71; color:white; border:none; padding:12px; cursor:pointer; font-weight:bold; border-radius:5px;">SHTO</button>
     </form>
 </div>
-
 
 <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 30px; border-radius: 15px; width: 400px; color: white; border: 1px solid rgba(255,255,255,0.2);">
         <h3 style="text-align: center; margin-top: 0;">🗑️ Fshij një Produkt</h3>
