@@ -1,4 +1,24 @@
 <?php
+if (isset($_POST['fshij_produkt'])) {
+        $emriPerFshirje = $_POST['pname_delete'];
+        $products = array_filter($products, function($p) use ($emriPerFshirje) {
+            return $p['name'] !== $emriPerFshirje;
+        });
+        $products = array_values($products); 
+        $message = "Produkti u fshi me sukses!";
+    }
+    $content = "<?php\n";
+    $content .= "\$products = [\n";
+    foreach ($products as $p) {
+        $content .= "    [\"name\" => \"" . addslashes($p['name']) . "\", \"price\" => " . $p['price'] . ", \"category\" => \"" . $p['category'] . "\", \"image\" => \"" . $p['image'] . "\"],\n";
+    }
+    $content .= "];";
+    file_put_contents($filePath, $content);
+}
+include "includes/header.php";
+include "includes/nav.php";
+?>
+
 <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 30px; border-radius: 15px; width: 400px; color: white; border: 1px solid rgba(255,255,255,0.2);">
         <h3 style="text-align: center; margin-top: 0;">🗑️ Fshij një Produkt</h3>
         <form method="POST">
