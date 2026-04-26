@@ -1,14 +1,22 @@
 <?php
-require "data/products.php";
-require_once "classes/product.php";
+if (file_exists("data/products.php")){
+    include "data/products.php";
+}
+if (!isset($products) || !is_array($products)){
+    $products = [];
+}
 
+require_once "classes/product.php";
 include "includes/header.php";
 include "includes/nav.php";
 
-usort($products, function($a, $b) {
-    $a['price'] <=> $b['price'];
-});
-
+if (count($products) > 0){
+    usort($products, function($a, $b) {
+        $priceA = isset($a['price']) ? $a['price'] : 0;
+        $priceB = isset($b['price']) ? $b['price'] : 0;
+        return $priceA <=> $priceB;
+    });
+}
 $categories = [
     "drinks" => "Pijet (Drinks) ",
     "sweet" => "Embelsirat (Sweet) ",
@@ -17,10 +25,13 @@ $categories = [
 
 echo "<div class = 'container' style = 'padding-top: 20px;'>";
 
-foreach($categories as $key => $label){
+if (empty($products)){
+    echo "<h3 style='color:white; text-align:center;'>Për momentin nuk ka produkte në stok.</h3>";
+} else{
+    foreach($categories as $key => $label){
     echo "<h2 style='color:white; margin-left:20px; font-family: sans-serif;'>$label</h2>";
     echo "<div class='category-row' style='display: flex; overflow-x: auto; gap: 15px; padding: 20px;'>"; 
-    
+ 
     foreach($products as $data){
         if(isset($data['category']) && $data['category'] == $key){
             $p = new Product($data['name'], $data['price'], $data['image']);
@@ -38,6 +49,7 @@ foreach($categories as $key => $label){
         }
     }
     echo "</div>";
+}
 }
 echo "</div>";
 
