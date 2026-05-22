@@ -1,27 +1,40 @@
 <?php
-session_start();
+
+require_once "includes/init.php";
+
 include "includes/header.php";
 include "includes/nav.php";
 
 $message = "";
 $error = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    $fullname = $_POST['fullname'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+if ($_SERVER["REQUEST_METHOD"] === "POST"){
+    $fullname = trim($_POST['fullname'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-    if(!preg_match("/^[a-zA-Z]{2,}\s[a-zA-z]{2,}$/", $fullname)){
-        $error = "Shenoni emrin dhe mbiemrin e plote!";
+    if(!preg_match("/^[a-zA-ZÀ-ž\s]{4,100}$/u", $fullname) || substr_count(trim($fullname), ' ') < 1){
+        $error = "Shënoni emrin dhe mbiemrin e plotë!";
     }
-    elseif (!preg_match("/^[^@]+@[^@]+\.[a-z]{2,}$/i", $email)){
+    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)){
         $error = "Formati i email-it nuk eshte i sakte!";
     }
-    elseif (!preg_match("/^[a-zA-Z0-9]{6,}$/", $password)){
+    elseif (strlen($password) < 6){
         $error = "Password-i duhet te kete te pakten 6 karaktere!";
     }
     else{
-        $message = "Llogaria u krijua me sukses! Mund te kyceni tani.";
+        try {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'user')");
+            $stmt->execute([$fullname, $email, $hashedPassword]);
+            $message = "Llogaria u krijua me sukses! Mund te kyceni tani.";
+        } catch (PDOException $e) {
+            if ($e->getCode() === '23000') {
+                $error = "Ky email ekziston tashmë.";
+            } else {
+                $error = "Gabim gjatë regjistrimit.";
+            }
+        }
     }
 }
 ?>
@@ -33,44 +46,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <?php if($error): ?>
             <div style="background: #ff4d4d; color: white; padding: 10px; border-radius: 5px; margin-bottom: 20px; font-size: 14px;">
-                <?php echo $error; ?>
+                <?php echo e($error); ?>
             </div>
         <?php endif; ?>
 
         <?php if($message): ?>
             <div style="background: #2ecc71; color: white; padding: 10px; border-radius: 5px; margin-bottom: 20px; font-size: 14px;">
-                <?php echo $message; ?>
+                <?php echo e($message); ?>
                 <br><a href="login.php" style="color: white; font-weight: bold;">Kliko këtu për Login</a>
             </div>
         <?php endif; ?>
 
-        <form method="POST">
+        <form method="POST" autocomplete="off">
             <div style="margin-bottom: 15px; text-align: left;">
                 <label style="color: white; display: block; margin-bottom: 5px; font-size: 14px;">Emri i Plotë</label>
-                <input type="text" name="fullname" placeholder="Filan Fisteku" 
-                       style="width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: white; outline: none;">
+                <input type="text" name="fullname" required placeholder="Filan Fisteku" 
+                       value="<?php echo e($_POST['fullname'] ?? ''); ?>" 
+                       style="width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: white; outline: none; box-sizing:border-box;">
             </div>
 
             <div style="margin-bottom: 15px; text-align: left;">
                 <label style="color: white; display: block; margin-bottom: 5px; font-size: 14px;">Email</label>
-                <input type="text" name="email" placeholder="email@shembull.com" 
-                       style="width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: white; outline: none;">
+                <input type="email" name="email" required placeholder="email@shembull.com" 
+                       value="<?php echo e($_POST['email'] ?? ''); ?>" 
+                       style="width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: white; outline: none; box-sizing:border-box;">
             </div>
 
             <div style="margin-bottom: 25px; text-align: left;">
                 <label style="color: white; display: block; margin-bottom: 5px; font-size: 14px;">Password</label>
-                <input type="password" name="password" placeholder="Min. 6 karaktere" 
-                       style="width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: white; outline: none;">
+                <input type="password" name="password" required placeholder="Min. 6 karaktere" 
+                       style="width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: white; outline: none; box-sizing:border-box;">
             </div>
 
-            <button type="submit" style="width: 100%; padding: 12px; border-radius: 8px; border: none; background: #3498db; color: white; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s;">
+            <button type="submit" style="width: 100%; padding: 12px; border-radius: 8px; border: none; background: #3498db; color: white; font-weight: bold; font-size: 16px; cursor: pointer;">
                 Regjistrohu
             </button>
         </form>
         
-        <p style="color: white; margin-top: 20px; font-size: 13px; opacity: 0.7;">
-            Keni llogari? <a href="login.php" style="color: #3498db; text-decoration: none;">Kyçuni këtu</a>
-        </p>
     </div>
 </div>
 
