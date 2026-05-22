@@ -137,6 +137,7 @@ include "includes/nav.php";
             </table>
         </div>
     </div>
+
     <div style="width:95%; max-width:1000px; background:rgba(0,0,0,0.45); padding:20px; border-radius:15px;">
         <h3>📂 Kategoritë ekzistuese</h3>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
@@ -155,7 +156,6 @@ include "includes/nav.php";
             <?php endforeach; ?>
         </div>
     </div>
->>>>>>> Stashed changes
 </div>
 
 <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 30px; border-radius: 15px; width: 400px; color: white; border: 1px solid rgba(255,255,255,0.2);">
