@@ -1,5 +1,27 @@
 <?php
-require "data/products.php";
+require_once "includes/init.php";
+
+$q = trim($_GET['q'] ?? '');
+$products = [];
+
+if ($q !== ''){
+    try{
+        $terms = array_filter(array_map('trim',explode(',', $q)));
+        $where = [];
+        $params = [];
+        foreach($terms as $term){
+            $where[] = "p.name LIKE ?";
+            $params[] = '%' . $term . '%';
+        }
+        $sql = "SELECT p.*, c.name AS category_name FROM products p INNER JOIN categories c ON p.category_id = c.id WHERE " . implode(' OR ', $where) . "ORDER BY p.price ASC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        $products = $stmt->fetchAll();
+    }catch (PDOException $e){
+        $products = [];
+    }
+}
+
 include "includes/header.php";
 include "includes/nav.php";
 ?>
@@ -9,52 +31,35 @@ include "includes/nav.php";
         <h2 style="color: white; margin-bottom: 20px; font-family: sans-serif;">Kërko Produktin</h2>
         <form method="GET">
             <input type="text" name="q" placeholder="Psh: Coca Cola, Fanta, Chips..." 
-                   style="width: 100%; padding: 12px; border-radius: 8px; border: none; font-size: 16px; outline: none;"
-                   value="<?php echo isset($_GET['q']) ? htmlspecialchars($_GET['q']) : ''; ?>">
-            <button type="submit" style="margin-top: 15px; width: 100%; font-weight: bold; padding: 12px; background: #2ecc71; color: white; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;">KËRKO</button>
+                   style="width: 100%; padding: 12px; border-radius: 8px; border: none; font-size: 16px; outline: none; box-sizing:border-box;"
+                   value="<?php echo e($q); ?>">
+            <button type="submit" style="background: #2ecc71; color: white; border: none; padding:8px 14px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; height: 20px;">Search</button>
         </form>
     </div>
 
     <hr style="margin: 40px 0; border: 0; border-top: 1px solid rgba(255,255,255,0.1);">
 
     <div class="search-results" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 0 10px;">
-        <?php
-        if(isset($_GET['q']) && !empty(trim($_GET['q']))){
-            $input = $_GET['q'];
-            $searchTerms = explode(',', $input);
-            $foundAny = false;
-
-            foreach($products as $p){
-                $match = false;
-    foreach($searchTerms as $term){
-                    $trimmedTerm = trim($term);
-                    if(!empty($trimmedTerm) && stripos($p['name'], $trimmedTerm) !== false){
-                        $match = true;
-                        break; 
-                    }
-                }
-
-                 if($match){
-                    $foundAny = true;
-                    $img = !empty($p['image']) ? $p['image'] : "https://via.placeholder.com/200";
-                    ?>
+        <?php if($q !== ''): ?>
+            <?php if(!empty($products)): ?>
+                <?php foreach($products as $p): ?>
                     
                     <div class="product-card" style="background: white; width: 250px; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.3); transition: transform 0.3s;">
                         <div style="width: 100%; height: 200px; overflow: hidden; background: #f9f9f9;">
-                            <img src="<?php echo $img; ?>" 
-                                 style="width: 100%; height: 100%; object-fit: contain; padding: 10px;" 
-                                 alt="<?php echo htmlspecialchars($p['name']); ?>">
+                            <img src="<?php echo e($p['image'] ?: 'https://via.placeholder.com/200'); ?>" 
+                                 style="width: 100%; height: 100%; object-fit: contain; padding: 10px; box-sizing: border-box;" 
+                                 alt="<?php echo e($p['name']); ?>">
                         </div>
                         
                         <div style="padding: 15px; text-align: left;">
                             <span style="font-size: 12px; text-transform: uppercase; color: #95a5a6; font-weight: bold;">
-                                <?php echo htmlspecialchars($p['category']); ?>
+                                <?php echo e($p['category_name']); ?>
                             </span>
                             <h3 style="margin: 5px 0; color: #2c3e50; font-size: 1.2rem;">
-                                <?php echo htmlspecialchars($p['name']); ?>
+                                <?php echo e($p['name']); ?>
                             </h3>
                             <p style="font-size: 1.4rem; color: #e67e22; font-weight: bold; margin: 10px 0;">
-                                <?php echo number_format($p['price'], 2); ?> €
+                                <?php echo number_format((float)$p['price'], 2); ?> €
                             </p>
                             
                             <a href="products.php" style="text-decoration: none;">
@@ -65,22 +70,16 @@ include "includes/nav.php";
                         </div>
                     </div>
 
-                    <?php
-                }
-            }
-
-            if(!$foundAny){
-                echo "<div style='color:white; background: rgba(231, 76, 60, 0.2); padding: 20px; border-radius: 10px; width: 100%; max-width: 500px;'>";
-                echo "Nuk u gjet asnjë produkt për: <strong>" . htmlspecialchars($input) . "</strong>";
-                echo "</div>";
-            }
-        } else {
-            echo "<p style='color: rgba(255,255,255,0.5); font-style: italic;'>Shkruani diçka për të filluar kërkimin...</p>";
-        }
-        ?>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div style="color:white; background: rgba(231, 76, 60, 0.2); padding: 20px; border-radius: 10px; width: 100%; max-width: 500px;">
+                
+                Nuk u gjet asnje produkt per: <strong><?php echo e($q); ?></strong>
+                </div>
+            <?php endif; ?>
+        <?php else: ?>
+            <p style="color:rgba(255,255,255,0.5); font-style:italic;">Shkruani dicka oer te filluar kerkimin...</p>
+        <?php endif; ?>
     </div>
 </div>
-
-<?php
-include "includes/footer.php";
-?>
+<?php include "includes/footer.php"; ?>
