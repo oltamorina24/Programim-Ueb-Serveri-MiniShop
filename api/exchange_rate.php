@@ -1,8 +1,6 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 
-// Web API e jashtme më e përshtatshme për MiniShop:
-// Merr kursin aktual EUR -> USD dhe përdoret për konvertimin e çmimeve të produkteve.
 $url = 'https://api.frankfurter.app/latest?from=EUR&to=USD';
 
 try {
