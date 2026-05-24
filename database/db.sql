@@ -29,7 +29,7 @@ CREATE TABLE products (
     category_id INT NOT NULL,
     name VARCHAR(100) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
-    image VARCHAR(500) DEFAULT NULL,
+    image TEXT DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_products_categories FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -76,14 +76,14 @@ INSERT INTO categories (name, slug) VALUES
 INSERT INTO products (category_id, name, price, image) VALUES
 (1, 'Coca Cola', 0.60, 'https://tse4.mm.bing.net/th/id/OIP.gOSWD16OMZ6vAMmKT8ltUwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3'),
 (1, 'Fanta', 0.60, 'https://tse3.mm.bing.net/th/id/OIP.UgCfYB2b2LHw6jLi6pm_GwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3'),
-(1, 'Ujë', 0.30, 'https://i5.walmartimages.com/asr/83568193-2418-40f0-8367-4fd80481e2f8_1.fc5284020d9e9b9bcd45d777a9e62bb5.jpeg'),
+(1, 'Ujë', 0.30, 'https://tse2.mm.bing.net/th/id/OIP.9Ur7wgEtCzkoyTg-3-dlhwHaHa?cb=thfvnextfalcon&rs=1&pid=ImgDetMain&o=7&rm=3'),
 (1, 'Lëng Portokalli', 0.70, 'https://tse4.mm.bing.net/th/id/OIP.cnKmGyy2Kdtr6YxvNGh-xQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3'),
 (1, 'Sprite', 0.60, 'https://tse1.mm.bing.net/th/id/OIP.QCwBuHCN8aYIl7vJcSg3hgAAAA?w=341&h=929&rs=1&pid=ImgDetMain&o=7&rm=3'),
 (2, 'Bakllava', 2.50, 'https://m.media-amazon.com/images/I/719q-rWf6bL._AC_SL1500_.jpg'),
 (2, 'Trilece', 2.00, 'https://glossy.espreso.co.rs/data/images/2023/02/19/15/355876_trileceshutterstock-2145843005_ff.jpg?ver=1676816929'),
 (3, 'Kikirika', 0.80, 'https://tse3.mm.bing.net/th/id/OIP.HdWX48IfdUf6PU-NVLkYzAHaDo?rs=1&pid=ImgDetMain&o=7&rm=3'),
-(3, 'Biskota te kripura', 1.10, 'https://img.freepik.com/premium-photo/small-salted-biscuits_1048944-3064212.jpg'),
+(3, 'Biskota te kripura', 1.10, 'https://www.tastyandinspired.com/wp-content/uploads/2025/08/Best_Ever_Fudgy_Salted_Brownie_Cookies_1.webp'),
 (1, 'Fanta exotic',0.60, 'https://unclefood.com/cdn/shop/files/fanta-exotic-330ml_1.jpg?v=1706807136'),
 (1, 'Golden Eagle', 0.60, 'https://goldeneagle-ks.com/wp-content/uploads/2023/11/Golden-Eagle-250ml.png'),
 (3, 'Doritos', 1.50, 'https://mercatoronline.si/img/cache/products/9694/product_medium_image/00521703.jpg'),
-(2,'Biskota',1.20, 'https://www.apotekaherba.rs/uploads/store/products/images/keks-integralni-cokolada-cioccolato-280g-6394f9cf679b0.webp');
+(2,'Biskota',1.20, 'https://i0.wp.com/www.biggerbolderbaking.com/wp-content/uploads/2022/02/Chocolate-Peanut-Butter-Cookies4-scaled.jpg?resize=1024%2C1536&ssl=1');
