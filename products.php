@@ -261,27 +261,14 @@ include "includes/nav.php";
 
                                 <?php if (isAdmin()): ?>
 
-                                    <form method="POST" action="products.php" style="margin:0 0 8px 0;">
-                                        <input type="hidden" name="product_id" value="<?php echo (int)$p['id']; ?>">
+                                <button 
+                                       class="delete-product-btn" 
+                                       data-id="<?php echo (int)$p['id']; ?>" 
+                                       style="background:#ff4d4d; color:white; border:none; padding:8px 12px; border-radius:5px; cursor:pointer; width:100%;">
+                                     Delete
+                                </button>
 
-                                        <button 
-                                            type="submit"
-                                            name="add_to_cart"
-                                            style="background:#2ecc71; color:white; border:none; padding:8px 20px; border-radius:5px; cursor:pointer; width:100%;"
-                                        >
-                                            Add to Cart
-                                        </button>
-                                    </form>
-
-                                    <button 
-                                        class="delete-product-btn" 
-                                        data-id="<?php echo (int)$p['id']; ?>" 
-                                        style="background:#ff4d4d; color:white; border:none; padding:8px 12px; border-radius:5px; cursor:pointer; width:100%;"
-                                    >
-                                        Delete
-                                    </button>
-
-                                <?php else: ?>
+                           <?php else: ?>
 
                                     <form method="POST" action="products.php" style="margin:0;">
                                         <input type="hidden" name="product_id" value="<?php echo (int)$p['id']; ?>">
