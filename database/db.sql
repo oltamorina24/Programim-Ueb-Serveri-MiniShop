@@ -1,7 +1,6 @@
 CREATE DATABASE IF NOT EXISTS minishop_phase2 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE minishop_phase2;
 
-DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS order_items;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS products;
@@ -54,19 +53,9 @@ CREATE TABLE order_items (
     CONSTRAINT fk_order_items_products FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE messages (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL,
-    subject VARCHAR(150) NOT NULL,
-    message TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
-
 INSERT INTO users (name, email, password, role) VALUES
 ('Admin', 'admin@gmail.com', '$2y$12$A2LQskQjAzCcwyGokyb1/.ykz6ncz9PEriqQoVFW53xqNmqIkfovO', 'admin'),
 ('User', 'user@gmail.com', '$2y$12$pemfuGjByNBSA7OLlLJc3eQEXFWLj.uckrDMFzUcd45JktJn045XO', 'user');
--- Password për të dy llogaritë testuese: admin123 / user123
 
 INSERT INTO categories (name, slug) VALUES
 ('Pijet (Drinks)', 'drinks'),
