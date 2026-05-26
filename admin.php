@@ -122,7 +122,7 @@ include "includes/nav.php";
 
     <div style="display:flex; gap:30px; flex-wrap:wrap; justify-content:center; width:100%;">
         <div style="background:rgba(255,255,255,0.1); backdrop-filter:blur(10px); padding:30px; border-radius:15px; width:400px; border:1px solid rgba(255,255,255,0.2);">
-            <h3 style="text-align:center; margin-top:0;"> <?php echo $editProduct ? '📝 Ndrysho Produktin' : '➕ Shto Produkt të Ri'; ?></h3>
+            <h3 style="text-align:center; margin-top:0;">➕ <?php echo $editProduct ? 'Ndrysho Produktin' : 'Shto Produkt të Ri'; ?></h3>
 
             <form method="POST" enctype="multipart/form-data" autocomplete="off">
                 <input type="hidden" name="product_id" value="<?php echo e($editProduct['id'] ?? '0'); ?>">
@@ -132,7 +132,6 @@ include "includes/nav.php";
                 <input type="number" step="0.01" name="pprice" placeholder="Çmimi (€)" required value="<?php echo e($editProduct['price'] ?? ''); ?>" style="width:100%; padding:10px; margin:10px 0; border-radius:5px; border:none; box-sizing:border-box;">
 
                 <select name="pcat" required style="width:100%; padding:10px; margin:10px 0; border-radius:5px; box-sizing:border-box;">
-                    <option value="" disabled <?php echo !isset($editProduct['category_id']) ? 'selected' : ''; ?>>Zgjidh Kategorinë</option>
                     <?php foreach ($categories as $cat): ?>
                         <option value="<?php echo (int)$cat['id']; ?>" <?php echo isset($editProduct['category_id']) && $editProduct['category_id'] == $cat['id'] ? 'selected' : ''; ?>>
                             <?php echo e($cat['name']); ?>
@@ -148,13 +147,13 @@ include "includes/nav.php";
                     <?php echo $editProduct ? 'RUAJ NDRYSHIMET' : 'SHTO'; ?>
                 </button>
                 <?php if ($editProduct): ?>
-                    <a href="admin.php" style="display:block; color:white; text-align:center; margin-top:10px; text-decoration:none;">❌ Anulo</a>
+                    <a href="admin.php" style="display:block; color:white; text-align:center; margin-top:10px;">Anulo</a>
                 <?php endif; ?>
             </form>
         </div>
 
         <div style="background:rgba(255,255,255,0.1); backdrop-filter:blur(10px); padding:30px; border-radius:15px; width:400px; border:1px solid rgba(255,255,255,0.2);">
-            <h3 style="text-align:center; margin-top:0;"> <?php echo $editCategory ? '📝 Ndrysho Kategorinë' : '📂 Shto Kategori'; ?></h3>
+            <h3 style="text-align:center; margin-top:0;">📁 <?php echo $editCategory ? 'Ndrysho Kategorinë' : 'Shto Kategori'; ?></h3>
             <form method="POST" autocomplete="off">
                 <input type="hidden" name="category_id" value="<?php echo e($editCategory['id'] ?? '0'); ?>">
                 <input type="text" name="category_name" placeholder="Emri p.sh. Pijet (Drinks)" required value="<?php echo e($editCategory['name'] ?? ''); ?>" style="width:100%; padding:10px; margin:10px 0; border-radius:5px; border:none; box-sizing:border-box;">
@@ -162,15 +161,12 @@ include "includes/nav.php";
                 <button type="submit" name="save_category" style="width:100%; background:#3498db; color:white; border:none; padding:12px; cursor:pointer; font-weight:bold; border-radius:5px;">
                     <?php echo $editCategory ? 'RUAJ KATEGORINË' : 'SHTO KATEGORI'; ?>
                 </button>
-                <?php if ($editCategory): ?>
-                    <a href="admin.php" style="display:block; color:white; text-align:center; margin-top:10px; text-decoration:none;">❌ Anulo</a>
-                <?php endif; ?>
             </form>
         </div>
     </div>
 
     <div style="width:95%; max-width:1000px; background:rgba(0,0,0,0.45); padding:20px; border-radius:15px;">
-        <h3>📦 Produktet ekzistuese</h3>
+        <h3>Produktet ekzistuese</h3>
         <div style="overflow-x:auto;">
             <table style="width:100%; border-collapse:collapse; color:white;">
                 <tr style="background:rgba(255,255,255,0.15);">
@@ -181,20 +177,17 @@ include "includes/nav.php";
                     <th style="padding:10px; text-align:left;">Veprime</th>
                 </tr>
                 <?php foreach ($products as $p): ?>
-                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <tr>
                         <td style="padding:10px;"><img src="<?php echo e($p['image']); ?>" style="width:45px; height:45px; object-fit:contain; background:white; border-radius:6px;"></td>
                         <td style="padding:10px;"><?php echo e($p['name']); ?></td>
                         <td style="padding:10px;"><?php echo number_format((float)$p['price'], 2); ?> €</td>
                         <td style="padding:10px;"><?php echo e($p['category_name']); ?></td>
-                        <td style="padding:10px;">
-                            <div style="display:flex; gap:8px; align-items:center;">
-                                <a href="admin.php?edit_product=<?php echo (int)$p['id']; ?>" style="background:#f1c40f; color:#222; padding:8px 12px; border-radius:5px; text-decoration:none; font-weight:bold;">Edit</a>
-                                
-                                <form method="POST" onsubmit="return confirm('A je i sigurt që dëshiron të fshish këtë produkt?');" style="margin:0;">
-                                    <input type="hidden" name="product_id" value="<?php echo (int)$p['id']; ?>">
-                                    <button type="submit" name="delete_product" style="background:#ff4d4d; color:white; border:none; padding:8px 12px; border-radius:5px; cursor:pointer; font-weight:bold;">Delete</button>
-                                </form>
-                            </div>
+                        <td style="padding:10px; display:flex; gap:8px;">
+                            <a href="admin.php?edit_product=<?php echo (int)$p['id']; ?>" style="background:#f1c40f; color:#222; padding:8px 12px; border-radius:5px; text-decoration:none;">Edit</a>
+                            <form method="POST" onsubmit="return confirm('A je i sigurt?');" style="margin:0;">
+                                <input type="hidden" name="product_id" value="<?php echo (int)$p['id']; ?>">
+                               
+                            </form>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -203,17 +196,17 @@ include "includes/nav.php";
     </div>
 
     <div style="width:95%; max-width:1000px; background:rgba(0,0,0,0.45); padding:20px; border-radius:15px;">
-        <h3>📂 Kategoritë ekzistuese</h3>
+        <h3>Kategoritë ekzistuese</h3>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <?php foreach ($categories as $cat): ?>
                 <div style="background:white; color:#2c3e50; padding:12px; border-radius:10px; min-width:180px;">
                     <strong><?php echo e($cat['name']); ?></strong><br>
-                    <small style="color:#7f8c8d;"><?php echo e($cat['slug']); ?></small>
+                    <small><?php echo e($cat['slug']); ?></small>
                     <div style="display:flex; gap:6px; margin-top:10px;">
-                        <a href="admin.php?edit_category=<?php echo (int)$cat['id']; ?>" style="background:#f1c40f; color:#222; padding:6px 10px; border-radius:5px; text-decoration:none; font-size:13px; font-weight:bold;">Edit</a>
-                        <form method="POST" onsubmit="return confirm('A je i sigurt që dëshiron të fshish këtë kategori?');" style="margin:0;">
+                        <a href="admin.php?edit_category=<?php echo (int)$cat['id']; ?>" style="background:#f1c40f; color:#222; padding:6px 10px; border-radius:5px; text-decoration:none;">Edit</a>
+                        <form method="POST" onsubmit="return confirm('A je i sigurt?');" style="margin:0;">
                             <input type="hidden" name="category_id" value="<?php echo (int)$cat['id']; ?>">
-                            <button type="submit" name="delete_category" style="background:#ff4d4d; color:white; border:none; padding:6px 10px; border-radius:5px; cursor:pointer; font-size:13px; font-weight:bold;">Delete</button>
+                            <button type="submit" name="delete_category" style="background:#ff4d4d; color:white; border:none; padding:6px 10px; border-radius:5px; cursor:pointer;">Delete</button>
                         </form>
                     </div>
                 </div>
