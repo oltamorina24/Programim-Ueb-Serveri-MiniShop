@@ -14,8 +14,8 @@ try {
     $numriKategorive = 0;
 }
 
-$emriPerdoruesit = isset($_SESSION['username']) && $_SESSION['username'] !== "" 
-    ? htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8') 
+$emriPerdoruesit = isset($_SESSION['user']['name']) && $_SESSION['user']['name'] !== "" 
+    ? htmlspecialchars($_SESSION['user']['name'], ENT_QUOTES, 'UTF-8') 
     : "Vizitor";
 
 include "includes/header.php";
