@@ -70,7 +70,6 @@ include "includes/nav.php";
         <p style="color:white; margin-top:20px; font-size:13px; opacity:0.8;">
             Nuk keni llogari? <a href="register.php" style="color:#2ecc71; text-decoration:none;">Regjistrohuni</a>
         </p>
-        <p style="color:white; font-size:12px; opacity:0.65;">Admin test: admin@gmail.com / admin123</p>
     </div>
 </div>
 
