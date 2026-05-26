@@ -379,4 +379,4 @@ document.querySelectorAll('.delete-product-btn').forEach(button => {
 </script>
 <?php endif; ?>
 
-<?php include "includes/footer.php"; ?>
+<?php include "includes/footer.php"; ?> 
